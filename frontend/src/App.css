@@ -1,0 +1,57 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.header {
+  padding: 1.5rem 0 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 12px;
+}
+
+.header h1 {
+  font-size: 1.35rem;
+  font-weight: 650;
+  color: #0f172a;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.15rem;
+}
+
+.main {
+  flex: 1;
+  padding: 1.25rem 0;
+}
+
+.footer {
+  padding: 1rem 0 1.5rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+}

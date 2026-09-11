@@ -1,0 +1,40 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+      - DOCUMENTS_PATH=documents
+      - CHROMA_PERSIST_DIR=/app/data/chroma
+    volumes:
+      - chroma_data:/app/data/chroma
+      # Optional: mount documents for live updates during development
+      - ./backend/documents:/app/documents:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Leave empty so the browser uses relative /api which nginx proxies
+        VITE_API_URL: ""
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  chroma_data:
